@@ -1,0 +1,9 @@
+https://www.bilibili.com/cheese/play/ep654552?csource=common_hp_favorite_null&spm_id_from=333.1387.0.0
+OA實戰系統前端篇
+
+- npm install axios --save
+- npm install element-plus --save
+- npm install @element-plus/icons-vue
+// https://www.wangeditor.com/
+- npm install @wangeditor/editor-for-vue@next --save
+- npm install echarts --save
