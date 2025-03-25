@@ -35,7 +35,7 @@ const routes = [
 				component: absent,
 				meta: {
 					icon: "Checked",
-					text: "考勤管理",
+					text: "出勤管理",
 					permissions: [PermissionChoices.Staff],
 					opt: "|"
 				},

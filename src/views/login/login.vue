@@ -73,7 +73,7 @@ const onSubmit = async () => {
         let user = data.user;
         authStore.setUserToken(user, token)
         // 跳轉業面
-        router.push({ name: 'frame' })
+        router.push({ name: 'home' })
     } catch (detail) {
         // alert(detail)
         ElMessage.error(detail)
