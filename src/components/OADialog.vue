@@ -5,7 +5,7 @@ let dialogVisible = defineModel({required: true})
 let props = defineProps({
     title: {
         type: String,
-        defualt: ''
+        default: ''
     },
     width: {
         type: String,

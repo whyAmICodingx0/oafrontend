@@ -49,7 +49,7 @@ const onDeleteInform = async () => {
 </script>
 
 <template>
-    <OADialog :v-model="dialogVisible" title="提示" @click="onDeleteInform">
+    <OADialog v-model="dialogVisible" title="提示" @click="onDeleteInform">
         <span>你確定要刪除這個通知嗎?</span>
     </OADialog>
     <OAMain title="通知列表">

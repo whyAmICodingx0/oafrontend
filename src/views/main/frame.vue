@@ -15,7 +15,6 @@ let displayUser = reactive({
     department: {},
     realname: ''
 })
-let defaultActive = ref('home')
 let isCollapse = ref(false);
 let dialogVisible = ref(false);
 let formLabelWidth = '100px'
@@ -49,7 +48,6 @@ let asideWidth = computed(() => {
 })
 
 onMounted(() => {
-    defaultActive.value = router.currentRoute.value.name
     displayUser.department = authStore.user.department
     displayUser.realname = authStore.user.realname
 })
@@ -93,7 +91,7 @@ const onSubmit = () => {
         <el-aside class="aside" :width=asideWidth>
             <router-link to="/" class="brand"><strong>OA</strong><span v-show="!isCollapse">系統</span></router-link>
             <el-menu :router="true" active-text-color="#ffd04b" background-color="#343a40" class="el-menu-vertical-demo"
-                :default-active="defaultActive" text-color="#fff" :collapse="isCollapse" :collapse-transition="false">
+                :default-active="router.currentRoute.value.name" text-color="#fff" :collapse="isCollapse" :collapse-transition="false">
                 <template v-for="route in routes[0].children">
                     <template v-if="authStore.has_permission(route.meta.permissions, route.meta.opt)">
                         <el-menu-item v-if="!route.children" :index="route.name" :route="{ name: route.name }">

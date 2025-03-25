@@ -7,8 +7,10 @@ import staffHttp from '@/api/staffHttp';
 import { ElMessage } from 'element-plus';
 import { useAuthStore } from '@/stores/auth';
 import informHttp from '@/api/informHttp';
+import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore()
+const router = useRouter()
 
 let informForm = reactive({
     title: '',
@@ -98,6 +100,8 @@ const onSubmit = () => {
                 let data = await informHttp.publishInform(informForm)
                 console.log(data)
                 
+                ElMessage.success('訊息發布成功')
+                router.push({name: 'inform_list'})
             }catch(detail){
                 ElMessage.error(detail)
             }
