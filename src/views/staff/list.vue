@@ -15,7 +15,7 @@ let pagination = reactive({
     page: 1,
     total: 0
 })
-let page_size = ref(1)
+let page_size = ref(10)
 let dialogVisible = ref(false)
 let staffForm = reactive({
     status: 1
@@ -137,7 +137,7 @@ const onUploadFail = (error) => {
         <el-form :model="staffForm" label-witdth="100px">
             <el-form-item label="狀態">
                 <el-radio-group v-model="staffForm.status">
-                    <el-radio :value="1">激活</el-radio>
+                    <el-radio :value="1">啟用</el-radio>
                     <el-radio :value="3">鎖定</el-radio>
                 </el-radio-group>
             </el-form-item>
@@ -198,7 +198,7 @@ const onUploadFail = (error) => {
                 <el-table-column label="狀態">
                     <template #default="scope">
                         <el-tag type="info" v-if="scope.row.status == 1">正常</el-tag>
-                        <el-tag type="success" v-else-if="scope.row.status == 2">未激活</el-tag>
+                        <el-tag type="success" v-else-if="scope.row.status == 2">未啟用</el-tag>
                         <el-tag type="danger" v-else>已鎖定</el-tag>
                     </template>
                 </el-table-column>
@@ -212,8 +212,8 @@ const onUploadFail = (error) => {
                 <div style="display: flex; justify-content: space-between;">
                     <el-form-item label="每頁">
                         <el-select v-model="page_size" size="small" style="width: 100px;">
-                            <el-option select label="10條/頁" :value="1" />
-                            <el-option label="20條/頁" :value="2" />
+                            <el-option select label="10條/頁" :value="10" />
+                            <el-option label="20條/頁" :value="20" />
                         </el-select>
                     </el-form-item>
                     <el-pagination background layout="prev, pager, next" :total="pagination.total"

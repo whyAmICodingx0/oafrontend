@@ -140,8 +140,8 @@ onMounted(async () => {
                 <el-table-column prop="response_content" label="反饋意見" />
                 <el-table-column label="審核狀態">
                     <template #default="scope">
-                        <el-tag type="info" v-if="scope.row.status == 1">已通過</el-tag>
-                        <el-tag type="success" v-else-if="scope.row.status == 2">審核中</el-tag>
+                        <el-tag type="info" v-if="scope.row.status == 1">審核中</el-tag>
+                        <el-tag type="success" v-else-if="scope.row.status == 2">已通過</el-tag>
                         <el-tag type="danger" v-else>已拒絕</el-tag>
                     </template>
                 </el-table-column>
