@@ -10,6 +10,7 @@ import home from "@/views/home/home.vue";
 import absent from "@/views/absent/index.vue";
 import inform from "@/views/inform/index.vue";
 import staff from "@/views/staff/index.vue";
+import weather from "@/views/weather/weather.vue";
 import { PermissionChoices } from "@/stores/auth";
 
 const routes = [
@@ -26,7 +27,15 @@ const routes = [
 					icon: "HomeFilled",
 					text: "首頁",
 					permissions: [PermissionChoices.Staff],
-					opt: "|"
+					opt: "|",
+				},
+			},
+			{
+				path: "/weather",
+				name: "weather",
+				component: weather,
+				meta: {
+					hidden: true,
 				},
 			},
 			{
@@ -37,7 +46,7 @@ const routes = [
 					icon: "Checked",
 					text: "出勤管理",
 					permissions: [PermissionChoices.Staff],
-					opt: "|"
+					opt: "|",
 				},
 				children: [
 					{
@@ -46,9 +55,9 @@ const routes = [
 						component: myabsent,
 						meta: {
 							icon: "UserFilled",
-							text: "個人考勤",
+							text: "個人出勤",
 							permissions: [PermissionChoices.Staff],
-							opt: "|"
+							opt: "|",
 						},
 					},
 					{
@@ -57,9 +66,12 @@ const routes = [
 						component: subabsent,
 						meta: {
 							icon: "User",
-							text: "下屬考勤",
-							permissions: [PermissionChoices.Boarder, PermissionChoices.Leader],
-							opt: "|"
+							text: "下屬出勤",
+							permissions: [
+								PermissionChoices.Boarder,
+								PermissionChoices.Leader,
+							],
+							opt: "|",
 						},
 					},
 				],
@@ -72,7 +84,7 @@ const routes = [
 					icon: "BellFilled",
 					text: "通知管理",
 					permissions: [PermissionChoices.Staff],
-					opt: "|"
+					opt: "|",
 				},
 				children: [
 					{
@@ -82,8 +94,11 @@ const routes = [
 						meta: {
 							icon: "CirclePlusFilled",
 							text: "發布通知",
-							permissions: [PermissionChoices.Boarder, PermissionChoices.Leader],
-							opt: "|"
+							permissions: [
+								PermissionChoices.Boarder,
+								PermissionChoices.Leader,
+							],
+							opt: "|",
 						},
 					},
 					{
@@ -94,7 +109,7 @@ const routes = [
 							icon: "List",
 							text: "通知列表",
 							permissions: [PermissionChoices.Staff],
-							opt: "|"
+							opt: "|",
 						},
 					},
 					{
@@ -104,8 +119,8 @@ const routes = [
 						meta: {
 							hidden: true,
 							permissions: [PermissionChoices.Staff],
-							opt: "|"
-						}
+							opt: "|",
+						},
 					},
 				],
 			},
@@ -117,7 +132,7 @@ const routes = [
 					icon: "Avatar",
 					text: "員工管理",
 					permissions: [PermissionChoices.Boarder, PermissionChoices.Leader],
-					opt: "|"
+					opt: "|",
 				},
 				children: [
 					{
@@ -127,8 +142,11 @@ const routes = [
 						meta: {
 							icon: "CirclePlusFilled",
 							text: "新增員工",
-							permissions: [PermissionChoices.Boarder, PermissionChoices.Leader],
-							opt: "|"
+							permissions: [
+								PermissionChoices.Boarder,
+								PermissionChoices.Leader,
+							],
+							opt: "|",
 						},
 					},
 					{
@@ -138,8 +156,11 @@ const routes = [
 						meta: {
 							icon: "List",
 							text: "員工列表",
-							permissions: [PermissionChoices.Boarder, PermissionChoices.Leader],
-							opt: "|"
+							permissions: [
+								PermissionChoices.Boarder,
+								PermissionChoices.Leader,
+							],
+							opt: "|",
 						},
 					},
 				],

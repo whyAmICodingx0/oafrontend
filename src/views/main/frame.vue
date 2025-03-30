@@ -6,6 +6,7 @@ import { useRouter } from 'vue-router'
 import authHttp from '@/api/authHttp';
 import { ElMessage } from 'element-plus';
 import routes from '@/router/frame'
+import weatherHttp from '@/api/weatherHttp'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -46,10 +47,26 @@ let asideWidth = computed(() => {
         return '250px'
     }
 })
+let weather = ref([])
+const weatherIcon = computed(() =>
+    Array.isArray(weather.value) && weather.value.length > 2
+        ? weather.value[2]?.value
+        : ''
+)
+const temperature = computed(() =>
+    weather.value.find(item => item.element === '溫度')?.value || ''
+)
 
-onMounted(() => {
+onMounted(async () => {
     displayUser.department = authStore.user.department
     displayUser.realname = authStore.user.realname
+    try {
+        weather.value = await weatherHttp.getHomeWeather()
+        console.log('asdfasdf', weather.value)
+        console.log(weather.value[2].value)
+    } catch (detail) {
+        ElMessage.error(detail)
+    }
 })
 
 const onCollapse = () => {
@@ -91,9 +108,11 @@ const onSubmit = () => {
         <el-aside class="aside" :width=asideWidth>
             <router-link to="/" class="brand"><strong>OA</strong><span v-show="!isCollapse">系統</span></router-link>
             <el-menu :router="true" active-text-color="#ffd04b" background-color="#343a40" class="el-menu-vertical-demo"
-                :default-active="router.currentRoute.value.name" text-color="#fff" :collapse="isCollapse" :collapse-transition="false">
+                :default-active="router.currentRoute.value.name" text-color="#fff" :collapse="isCollapse"
+                :collapse-transition="false">
                 <template v-for="route in routes[0].children">
-                    <template v-if="authStore.has_permission(route.meta.permissions, route.meta.opt)">
+                    <template
+                        v-if="!route.meta?.hidden && authStore.has_permission(route.meta.permissions, route.meta.opt)">
                         <el-menu-item v-if="!route.children" :index="route.name" :route="{ name: route.name }">
                             <el-icon>
                                 <component :is="route.meta.icon"></component>
@@ -126,28 +145,39 @@ const onSubmit = () => {
             </el-menu>
         </el-aside>
         <el-container>
-            <el-header class="header">
+            <el-header class="header" style="display: flex; justify-content: space-between; align-items: center">
                 <div class="left-header">
                     <el-button v-show="isCollapse" :icon="Expand" @click="onCollapse" />
                     <el-button v-show="!isCollapse" :icon="Fold" @click="onCollapse" />
                 </div>
-                <el-dropdown>
-                    <span class="el-dropdown-link">
-                        <el-avatar :size="30" icon="UserFilled" />
-                        <span style="margin-left: 10px;">[{{ displayUser.department.name }}]{{
-                            displayUser.realname
-                        }}</span>
-                        <el-icon class="el-icon--right">
-                            <arrow-down />
-                        </el-icon>
-                    </span>
-                    <template #dropdown>
-                        <el-dropdown-menu>
-                            <el-dropdown-item @click="onControlResetPwdDialog">修改密碼</el-dropdown-item>
-                            <el-dropdown-item divided @click="onExit">退出登入</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </template>
-                </el-dropdown>
+                <div class="right-header" style="display: flex; align-items: center; gap: 20px;">
+                    <div>
+                        <h1>台中市</h1>
+                        <span v-if="temperature">氣溫：{{ temperature }}°C</span>
+                    </div>
+                    <div>
+                        <router-link :to="{ name: 'weather' }">
+                            <img :src="weatherIcon" alt="天氣圖示" style="height: 50px;" />
+                        </router-link>
+                    </div>
+                    <el-dropdown>
+                        <span class="el-dropdown-link">
+                            <el-avatar :size="30" icon="UserFilled" />
+                            <span style="margin-left: 10px;">[{{ displayUser.department.name }}]{{
+                                displayUser.realname
+                                }}</span>
+                            <el-icon class="el-icon--right">
+                                <arrow-down />
+                            </el-icon>
+                        </span>
+                        <template #dropdown>
+                            <el-dropdown-menu>
+                                <el-dropdown-item @click="onControlResetPwdDialog">修改密碼</el-dropdown-item>
+                                <el-dropdown-item divided @click="onExit">退出登入</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </template>
+                    </el-dropdown>
+                </div>
             </el-header>
             <el-main class="main">
                 <RouterView></RouterView>
