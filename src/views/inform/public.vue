@@ -49,8 +49,8 @@ const editorConfig = {
             customInsert(res, insertFn) {
                 if (res.errno == 0) {
                     let data = res.data
-                    let url = import.meta.env.VITE_BASE_URL + data.url
-                    let href = import.meta.env.VITE_BASE_URL + data.href
+                    let url = import.meta.env.VITE_MEDIA_URL + data.url
+                    let href = import.meta.env.VITE_MEDIA_URL + data.href
                     let alt = data.alt
                     insertFn(url, alt, href)
                 }else{

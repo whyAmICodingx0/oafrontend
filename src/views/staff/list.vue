@@ -89,7 +89,6 @@ const onSearch = () => {
 }
 
 const onDownload = async () => {
-    console.log('asdfasdf')
     let rows = tableRef.value.getSelectionRows()
     if(!rows || rows.length==0){
         ElMessage.info('請先選擇要導出的員工')

@@ -31,7 +31,7 @@ let rules = reactive({
         { required: true, message: '請輸入請假理由！', trigger: 'blur' }
     ]
 })
-// 個人考勤訊息
+// 個人請假訊息
 let absents = ref([])
 let absent_types = ref({})
 let responder = reactive({
@@ -102,11 +102,11 @@ onMounted(async () => {
         let absent_types_data = await absentHttp.getAbsentTypes()
         absent_types.value = absent_types_data
 
-        // 2. 獲取審批者
+        // 2. 獲取審核者
         let responder_data = await absentHttp.getResponder()
         Object.assign(responder, responder_data)
 
-        // 3. 獲取個人考勤列表
+        // 3. 獲取個人請假列表
         requestAbsents(1)
     } catch (detail) {
         ElMessage.error(detail)
@@ -116,11 +116,11 @@ onMounted(async () => {
 </script>
 
 <template>
-    <OAMain title="個人考勤">
+    <OAMain title="個人請假">
         <el-card style="text-align: right;">
             <el-button type="primary" @click="onShowDialog"><el-icon>
                     <Plus />
-                </el-icon>發起考勤</el-button>
+                </el-icon>發起請假</el-button>
         </el-card>
         <el-card>
             <el-table :data="absents" style="width: 100%">
@@ -134,7 +134,7 @@ onMounted(async () => {
                 </el-table-column>
                 <el-table-column prop="start_date" label="開始日期" />
                 <el-table-column prop="end_date" label="結束日期" />
-                <el-table-column label="審批領導">
+                <el-table-column label="審核領導">
                     {{ responder_str }}
                 </el-table-column>
                 <el-table-column prop="response_content" label="反饋意見" />
@@ -168,7 +168,7 @@ onMounted(async () => {
                 <el-date-picker v-model="absentform.date_range" type="daterange" range-separator="到"
                     start-placeholder="起始日期" end-placeholder="結束日期" format="YYYY-MM-DD" value-format="YYYY-MM-DD" />
             </el-form-item>
-            <el-form-item label="審批領導" :label-width="formLabelWidth">
+            <el-form-item label="審核領導" :label-width="formLabelWidth">
                 <el-input :value="responder_str" readonly disabled autocomplete="off" />
             </el-form-item>
             <el-form-item label="請假理由" :label-width="formLabelWidth" prop="request_content">

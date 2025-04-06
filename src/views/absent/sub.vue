@@ -30,6 +30,8 @@ onMounted(async () => {
         let data = await absentHttp.getSubAbsents()
         pagination.total = data.count
         absents.value = data.results
+        console.log('aaaaa')
+        console.log(absents.value)
     } catch (detail) {
         ElMessage.error(detail)
     }
@@ -50,7 +52,7 @@ const onSubmitAbsent = () => {
                 const absent = absents.value[handleIndex]
                 const data = await absentHttp.handleSubAbsent(absent.id, absentForm.status, absentForm.response_content)
                 absents.value.splice(handleIndex, 1, data)
-                ElMessage.success('下屬考勤處理成功')
+                ElMessage.success('下屬請假處理成功')
             }catch(detail){
                 ElMessage.error(detail)
             }
@@ -61,7 +63,7 @@ const onSubmitAbsent = () => {
 </script>
 
 <template>
-    <OADialog title="處理考勤" v-model="dialogVisible" @submit="onSubmitAbsent">
+    <OADialog title="處理請假" v-model="dialogVisible" @submit="onSubmitAbsent">
         <el-form :model="absentForm" :rules="rules" ref="absentFormRef" label-witdth="100px">
             <el-form-item label="結果" prop="status">
                 <el-radio-group v-model="absentForm.status">
@@ -74,7 +76,7 @@ const onSubmitAbsent = () => {
             </el-form-item>
         </el-form>
     </OADialog>
-    <OAMain title="下屬考勤">
+    <OAMain title="下屬請假">
         <el-card>
             <el-table :data="absents" style="width: 100%">
                 <el-table-column prop="title" label="標題" />
@@ -92,8 +94,8 @@ const onSubmitAbsent = () => {
                 </el-table-column>
                 <el-table-column prop="start_date" label="開始日期" />
                 <el-table-column prop="end_date" label="結束日期" />
-                <el-table-column prop="responder.realname" label="審批領導" />
-                <el-table-column prop="reqponse_content" label="反饋意見" />
+                <el-table-column prop="responder.realname" label="審核領導" />
+                <el-table-column prop="response_content" label="反饋意見" />
                 <el-table-column label="審核狀態">
                     <template #default="scope">
                         <el-tag type="info" v-if="scope.row.status == 1">審核中</el-tag>
